@@ -14,6 +14,7 @@ import { WalletConnectScreen } from "./screens/WalletConnectScreen";
 import { CredentialsContextProvider } from "./turnkey/CredentialsContext";
 import { TurnkeyWalletContextProvider } from "./turnkey/TurnkeyWalletContext";
 import { WalletConnectContextProvider } from "./walletconnect/WalletConnectContext";
+import { WalletConnectV2ContextProvider } from "./walletconnect/WalletConnectV2Context";
 
 const Stack = createNativeStackNavigator<TStackParamList>();
 
@@ -22,8 +23,9 @@ export function AppRoot() {
     <>
       <CredentialsContextProvider>
         <TurnkeyWalletContextProvider>
-          <WalletConnectContextProvider>
-            <ActionSheetProvider>
+          <WalletConnectV2ContextProvider>
+            <WalletConnectContextProvider>
+              <ActionSheetProvider>
               <SafeAreaProvider>
                 <NavigationContainer>
                   <Stack.Navigator initialRouteName="home">
@@ -62,8 +64,9 @@ export function AppRoot() {
                   </Stack.Navigator>
                 </NavigationContainer>
               </SafeAreaProvider>
-            </ActionSheetProvider>
-          </WalletConnectContextProvider>
+              </ActionSheetProvider>
+            </WalletConnectContextProvider>
+          </WalletConnectV2ContextProvider>
         </TurnkeyWalletContextProvider>
       </CredentialsContextProvider>
 

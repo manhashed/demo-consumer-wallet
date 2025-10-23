@@ -39,9 +39,10 @@ const config = {
   },
   web: {
     favicon: "./assets/favicon.png",
+    bundler: "webpack",
   },
   extra: {
-    ...(INCLUDE_ENV_FOR_DEV ? envResult.parsed : {}),
+    ...(INCLUDE_ENV_FOR_DEV && envResult.parsed ? envResult.parsed : {}),
   },
   plugins: [
     [

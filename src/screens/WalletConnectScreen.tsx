@@ -1,6 +1,6 @@
 import WalletConnect from "@walletconnect/client";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { LogView, useLogViewData } from "../components/LogView";
 import { usePrompt } from "../components/Prompt";
 import { ScrollContainer } from "../components/ScrollContainer";
@@ -12,6 +12,7 @@ import {
   getNetworkDisplayValue,
   truncateAddress,
 } from "../utils";
+import { WalletConnectV2Screen } from "./WalletConnectV2Screen";
 
 // See https://github.com/WalletConnect/walletconnect-monorepo/blob/c94c1d608e75ef7f0e77572a8627d9412ade24c3/packages/helpers/utils/src/constants.ts
 const WALLETCONNECT_RESERVED_EVENTS = [
@@ -55,11 +56,24 @@ const WALLETCONNECT_STATE_METHODS = [
 export function WalletConnectScreen(props: TWalletConnectScreenProps) {
   const { uri } = props.route.params;
 
+  // Auto-detect WalletConnect version
+  const isV2 = React.useMemo(() => {
+    if (!uri) return false;
+    return uri.includes('@2') || uri.includes('relay-protocol=') || uri.includes('symKey=');
+  }, [uri]);
+
+  // Route to appropriate version
+  if (isV2) {
+    return <WalletConnectV2Screen {...props} />;
+  }
+
+  // V1 implementation below
   const { logList } = useWalletConnectSubscription({ uri });
 
   return (
     <ScrollContainer>
       <View style={styles.root}>
+        <Text style={styles.versionBadge}>WalletConnect v1</Text>
         <LogView logList={logList} />
       </View>
     </ScrollContainer>
@@ -89,6 +103,32 @@ function useWalletConnectSubscription(input: { uri: string }) {
       return;
     }
     if (lastConnectedUri.current === uri) {
+      return;
+    }
+    // Don't attempt to connect if URI is missing or invalid
+    if (!uri || !uri.startsWith('wc:')) {
+      appendLog({
+        label: "WalletConnect",
+        data: "Waiting for valid WalletConnect URI (must start with 'wc:')",
+      });
+      return;
+    }
+
+    // Check if this is a WalletConnect v2 URI (not supported yet)
+    if (uri.includes('@2') || uri.includes('relay-protocol=')) {
+      appendLog({
+        label: "WalletConnect Version Error",
+        data: "❌ This app currently supports WalletConnect v1 only. The URI you provided is WalletConnect v2 (@2). Please use a dApp that supports WalletConnect v1, or use the URI format: wc:...@1?bridge=...",
+      });
+      return;
+    }
+
+    // Check if this is a v1 URI without bridge parameter
+    if (uri.includes('@1') && !uri.includes('bridge=')) {
+      appendLog({
+        label: "WalletConnect Error",
+        data: "❌ Invalid WalletConnect v1 URI: missing 'bridge' parameter. The URI should include: ...@1?bridge=https://...",
+      });
       return;
     }
 
@@ -281,6 +321,12 @@ function useWalletConnectSubscription(input: { uri: string }) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+  },
+  versionBadge: {
+    padding: 8,
+    backgroundColor: '#f0f0f0',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 

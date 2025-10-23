@@ -7,9 +7,10 @@ export const KEY_LIST = [
   "TURNKEY_API_PRIVATE_KEY",
   "TURNKEY_BASE_URL",
   "TURNKEY_ORGANIZATION_ID",
-  "TURNKEY_PRIVATE_KEY_ID",
+  "SIGN_WITH",
   "INFURA_API_KEY",
   "ETHERSCAN_API_KEY",
+  "WALLETCONNECT_PROJECT_ID",
 ] as const;
 
 type TCredentials = {
@@ -17,9 +18,10 @@ type TCredentials = {
   TURNKEY_API_PRIVATE_KEY: string | null;
   TURNKEY_BASE_URL: string | null;
   TURNKEY_ORGANIZATION_ID: string | null;
-  TURNKEY_PRIVATE_KEY_ID: string | null;
+  SIGN_WITH: string | null;
   INFURA_API_KEY: string | null;
   ETHERSCAN_API_KEY: string | null;
+  WALLETCONNECT_PROJECT_ID: string | null;
 };
 
 export const initialCredentialsState = {
@@ -27,9 +29,10 @@ export const initialCredentialsState = {
   TURNKEY_API_PRIVATE_KEY: null,
   TURNKEY_BASE_URL: "https://api.turnkey.com",
   TURNKEY_ORGANIZATION_ID: null,
-  TURNKEY_PRIVATE_KEY_ID: null,
+  SIGN_WITH: null,
   INFURA_API_KEY: null,
   ETHERSCAN_API_KEY: null,
+  WALLETCONNECT_PROJECT_ID: null,
 };
 
 type TCredentialsContextValue = {

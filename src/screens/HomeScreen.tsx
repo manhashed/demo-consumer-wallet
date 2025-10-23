@@ -10,7 +10,7 @@ import { useTypedNavigation } from "../navigation";
 import { useCredentialsContext } from "../turnkey/CredentialsContext";
 import { useWalletQuery } from "../turnkey/TurnkeyQuery";
 import {
-  infuraNetworkList,
+  networkList,
   useTurnkeyWalletContext,
 } from "../turnkey/TurnkeyWalletContext";
 import { getEtherscanUrl, getNetworkDisplayValue } from "../utils";
@@ -48,8 +48,8 @@ export function HomeScreen() {
     content = (
       <>
         <LabeledRow
-          label="Turnkey private key ID"
-          value={credentials.TURNKEY_PRIVATE_KEY_ID || "<unknown>"}
+          label="Sign With"
+          value={credentials.SIGN_WITH || "<unknown>"}
         />
         <NetworkRow />
         <LabeledRow
@@ -117,7 +117,7 @@ function NetworkRow() {
       label="Current network"
       value={getNetworkDisplayValue(currentNetwork)}
       onValuePress={() => {
-        const displayList = infuraNetworkList.map(getNetworkDisplayValue);
+        const displayList = networkList.map(getNetworkDisplayValue);
 
         const options = [...displayList, "Cancel"];
         const cancelButtonIndex = options.length - 1;
@@ -132,9 +132,9 @@ function NetworkRow() {
               return;
             }
 
-            const selectedNetwork = infuraNetworkList[selectedIndex];
+            const selectedNetwork = networkList[selectedIndex];
             if (
-              !infuraNetworkList.includes(selectedNetwork) ||
+              !networkList.includes(selectedNetwork) ||
               selectedNetwork === currentNetwork
             ) {
               return;

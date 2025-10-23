@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository features a minimal consumer wallet app powered by Turnkey. Behind the scenes, it uses [`@turnkey/ethers`](https://www.npmjs.com/package/@turnkey/ethers) for signing and WalletConnect (v1) for accessing dapps.
+This repository features a minimal consumer wallet app powered by Turnkey. Behind the scenes, it uses [`@turnkey/ethers`](https://www.npmjs.com/package/@turnkey/ethers) for signing and WalletConnect (v1 & v2) for accessing dapps.
 
 With Turnkey, you can easily build wallet apps leveraging the existing ecosystem; `TurnkeySigner` is a drop-in replacement for `ethers.Wallet`, but with fine-grained transaction controls via [Turnkey policies](https://docs.turnkey.com/managing-policies/quickstart), all without compromising on security.
 
@@ -20,14 +20,27 @@ $ corepack enable # Updates npm for the local project
 
 $ npm install
 $ npm start # Follow the instructions on screen to build to your device or a simulator
+
+# Or run directly on web (for testing only)
+$ npm run web
 ```
 
 To configure the demo passkey wallet you'll need the following:
 * A Turnkey organization ID: you can create one by following our [quickstart guide](https://docs.turnkey.com/getting-started/quickstart).
-* A new Turnkey API key (public/private key pair). You can generate one using [our CLI](https://github.com/tkhq/tkcli), or through the Turnkey dashboard dashboard
+* A new Turnkey API key (public/private key pair). You can generate one using [our CLI](https://github.com/tkhq/tkcli), or through the Turnkey dashboard
 * Turnkey's base URL: you can leave the default of `https://api.turnkey.com`.
-* A new Turnkey private key ID: head to "Private Keys" in your Turnkey dashboard and create a new one ("Create private key"). The "Curve type" should be "SECP256K1", and the "Asset address type" should be "ETHEREUM".
-* An account on [Infura](https://www.infura.io/) and [Etherscan](https://etherscan.io/)
+* A Turnkey "Sign With" value: This can be a wallet address, wallet ID, or private key ID. Head to your Turnkey dashboard to get a wallet address or private key that you want to use for signing transactions.
+* An account on [Infura](https://www.infura.io/) (optional for networks like Base and Hyperliquid that use custom RPCs) and a block explorer API key (Etherscan, Basescan, etc.)
+
+### Quick Setup with Environment Variables
+
+You can optionally use environment variables for development:
+
+```bash
+cp .env.development.local.example .env.development.local
+# Edit the file with your credentials
+npm start
+```
 
 You'll provide this information on first app start in the settings screen:
 
@@ -46,3 +59,22 @@ https://github.com/tkhq/demo-consumer-wallet/blob/14f7e5535c453ab9990373e0dff611
 
 WalletConnect payloads are signed by Turnkey and broadcasted by your provider, all via the bridge:
 https://github.com/tkhq/demo-consumer-wallet/blob/14f7e5535c453ab9990373e0dff61165329be15b/src/screens/WalletConnectScreen.tsx#L222-L225
+
+## Platform Support
+
+- **iOS & Android**: Full production support with secure keychain storage
+- **Web**: Development/testing only - credentials stored in localStorage (not encrypted)
+  - Quick start: `npm run web`
+  - ⚠️ Use testnet credentials only on web!
+
+## What's New
+
+- ✅ **WalletConnect v2** - Full support with auto-detection (v1 & v2 work simultaneously)
+- ✅ Migrated from `TURNKEY_PRIVATE_KEY_ID` to flexible `SIGN_WITH` parameter
+- ✅ Added Base network support (Base Mainnet & Base Sepolia)
+- ✅ Added Hyperliquid mainnet support
+- ✅ Web platform support for development/testing
+- ✅ Environment variable configuration support
+- ✅ 12+ supported networks including Ethereum, Polygon, Optimism, Arbitrum, Base, and Hyperliquid
+
+See `CHANGELOG.md` for complete list of changes.
