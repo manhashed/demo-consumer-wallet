@@ -13,12 +13,18 @@
   - Transaction signing (eth_sendTransaction)
   - Message signing (personal_sign)
   - Typed data signing (eth_signTypedData_v4)
-  - Multi-chain support
+  - **Multi-chain support** - chain-agnostic transactions
+  - **Dynamic chain switching** - automatically uses the correct chain for each request
+  - **Session persistence** - sessions survive app minimization/closing
+  - **Home page session management** - view and disconnect active sessions directly from home screen
   - Relay-based communication
 - **Project ID configuration**: Added `WALLETCONNECT_PROJECT_ID` to settings
 - **Visual indicators**: Badges show which version is being used
 - **Created** `WalletConnectV2Context` for v2 state management
 - **Created** `WalletConnectV2Screen` for v2 connections
+- **Disconnect button** - manually disconnect from dApps with confirmation dialog
+- **Active sessions on home** - shows all connected dApps with names, URLs, and topics on the main screen
+- **No navigation needed** - manage all connections without leaving the home page
 
 #### Web Platform Support
 - **Web version enabled**: The wallet can now run in web browsers in addition to iOS and Android
@@ -155,7 +161,6 @@ The `SIGN_WITH` parameter accepts the same private key IDs that were used with `
 
 Potential future additions:
 - More Layer 2 networks (Zora, Mode, etc.)
-- WalletConnect v2 support
 - Custom RPC endpoint configuration
 - Enhanced transaction history for Base networks
 - Web-specific security improvements (Passkeys, iframe embedding)

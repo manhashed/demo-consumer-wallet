@@ -70,6 +70,11 @@ https://github.com/tkhq/demo-consumer-wallet/blob/14f7e5535c453ab9990373e0dff611
 ## What's New
 
 - ✅ **WalletConnect v2** - Full support with auto-detection (v1 & v2 work simultaneously)
+  - **Chain-agnostic** - Automatically uses the correct chain for each dApp request
+  - **Session persistence** - Connections survive app minimization/closing
+  - **Home page session management** - View and manage all active dApp connections from home screen
+  - **Disconnect button** - Manually disconnect from dApps with confirmation
+  - **No navigation needed** - See all connections without leaving the home page
 - ✅ Migrated from `TURNKEY_PRIVATE_KEY_ID` to flexible `SIGN_WITH` parameter
 - ✅ Added Base network support (Base Mainnet & Base Sepolia)
 - ✅ Added Hyperliquid mainnet support

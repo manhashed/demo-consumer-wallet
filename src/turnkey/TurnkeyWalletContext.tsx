@@ -27,14 +27,14 @@ export const networkList = [
 export type TNetwork = (typeof networkList)[number];
 
 // Custom RPC URLs for networks not supported by Infura
-const customRpcUrls: Partial<Record<TNetwork, string>> = {
+export const customRpcUrls: Partial<Record<TNetwork, string>> = {
   "base": "https://mainnet.base.org",
   "base-sepolia": "https://sepolia.base.org",
   "hyperliquid": "https://api.hyperliquid.xyz/evm",
 };
 
 // Chain IDs for each network
-const chainIds: Record<TNetwork, number> = {
+export const chainIds: Record<TNetwork, number> = {
   "homestead": 1,
   "goerli": 5,
   "sepolia": 11155111,
